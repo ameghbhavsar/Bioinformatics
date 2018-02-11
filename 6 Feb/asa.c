@@ -44,15 +44,13 @@ void main(){
   G_interacting=fopen("asa/G_interacting.asa","w");
   H_interacting=fopen("asa/H_interacting.asa","w");
 
-  // interacting(comp,A,A_interacting);
-  // fseek(comp, 0, SEEK_SET );
   i=0;
   while(fgets(line,100,comp)!=NULL){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
         &comp_asa[i].atm_no,comp_asa[i].atm_nm,comp_asa[i].res_nm,&comp_asa[i].ch_id,&comp_asa[i].res_no,&comp_asa[i].icode,&comp_asa[i].sasa,&comp_asa[i].N,&comp_asa[i].atm_tp,&comp_asa[i].atm_gp,&comp_asa[i].surf)){
       if (comp_asa[i].atm_no) {
-        printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-          comp_asa[i].atm_no,comp_asa[i].atm_nm,comp_asa[i].res_nm,comp_asa[i].ch_id,comp_asa[i].res_no,comp_asa[i].icode,comp_asa[i].sasa,comp_asa[i].N,comp_asa[i].atm_tp,comp_asa[i].atm_gp,comp_asa[i].surf);
+  //      printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
+  //        comp_asa[i].atm_no,comp_asa[i].atm_nm,comp_asa[i].res_nm,comp_asa[i].ch_id,comp_asa[i].res_no,comp_asa[i].icode,comp_asa[i].sasa,comp_asa[i].N,comp_asa[i].atm_tp,comp_asa[i].atm_gp,comp_asa[i].surf);
           i++;
       }
     }
@@ -75,8 +73,6 @@ void main(){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
     &chain.atm_no,chain.atm_nm,chain.res_nm,&chain.ch_id,&chain.res_no,&chain.icode,&chain.sasa,&chain.N,&chain.atm_tp,&chain.atm_gp,&chain.surf) && (chain.atm_nm)){
       if(comp_asa[chain.atm_no].sasa!=chain.sasa){
-        //printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-        //  chain.atm_no,chain.atm_nm,chain.res_nm,chain.ch_id,chain.res_no,chain.icode,chain.sasa,chain.N,chain.atm_tp,chain.atm_gp,chain.surf);
         	fprintf(B_interacting,"%s",line);
       }
     }
@@ -86,8 +82,6 @@ void main(){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
     &chain.atm_no,chain.atm_nm,chain.res_nm,&chain.ch_id,&chain.res_no,&chain.icode,&chain.sasa,&chain.N,&chain.atm_tp,&chain.atm_gp,&chain.surf) && (chain.atm_nm)){
       if(comp_asa[chain.atm_no].sasa!=chain.sasa){
-        //printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-        //  chain.atm_no,chain.atm_nm,chain.res_nm,chain.ch_id,chain.res_no,chain.icode,chain.sasa,chain.N,chain.atm_tp,chain.atm_gp,chain.surf);
           fprintf(C_interacting,"%s",line);
       }
     }
@@ -97,8 +91,6 @@ void main(){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
     &chain.atm_no,chain.atm_nm,chain.res_nm,&chain.ch_id,&chain.res_no,&chain.icode,&chain.sasa,&chain.N,&chain.atm_tp,&chain.atm_gp,&chain.surf) && (chain.atm_nm)){
       if(comp_asa[chain.atm_no].sasa!=chain.sasa){
-        //printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-        //  chain.atm_no,chain.atm_nm,chain.res_nm,chain.ch_id,chain.res_no,chain.icode,chain.sasa,chain.N,chain.atm_tp,chain.atm_gp,chain.surf);
         	fprintf(D_interacting,"%s",line);
       }
     }
@@ -108,8 +100,6 @@ void main(){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
     &chain.atm_no,chain.atm_nm,chain.res_nm,&chain.ch_id,&chain.res_no,&chain.icode,&chain.sasa,&chain.N,&chain.atm_tp,&chain.atm_gp,&chain.surf) && (chain.atm_nm)){
       if(comp_asa[chain.atm_no].sasa!=chain.sasa){
-        //printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-        //  chain.atm_no,chain.atm_nm,chain.res_nm,chain.ch_id,chain.res_no,chain.icode,chain.sasa,chain.N,chain.atm_tp,chain.atm_gp,chain.surf);
         	fprintf(E_interacting,"%s",line);
       }
     }
@@ -119,8 +109,6 @@ void main(){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
     &chain.atm_no,chain.atm_nm,chain.res_nm,&chain.ch_id,&chain.res_no,&chain.icode,&chain.sasa,&chain.N,&chain.atm_tp,&chain.atm_gp,&chain.surf) && (chain.atm_nm)){
       if(comp_asa[chain.atm_no].sasa!=chain.sasa){
-        //printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-        //  chain.atm_no,chain.atm_nm,chain.res_nm,chain.ch_id,chain.res_no,chain.icode,chain.sasa,chain.N,chain.atm_tp,chain.atm_gp,chain.surf);
         	fprintf(F_interacting,"%s",line);
       }
     }
@@ -130,8 +118,6 @@ void main(){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
     &chain.atm_no,chain.atm_nm,chain.res_nm,&chain.ch_id,&chain.res_no,&chain.icode,&chain.sasa,&chain.N,&chain.atm_tp,&chain.atm_gp,&chain.surf) && (chain.atm_nm)){
       if(comp_asa[chain.atm_no].sasa!=chain.sasa){
-        //printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-        //  chain.atm_no,chain.atm_nm,chain.res_nm,chain.ch_id,chain.res_no,chain.icode,chain.sasa,chain.N,chain.atm_tp,chain.atm_gp,chain.surf);
         	fprintf(G_interacting,"%s",line);
       }
     }
@@ -141,8 +127,6 @@ void main(){
     if(sscanf(line,"%d %s %s %c %d %f %f %d %d %d %f\n",
     &chain.atm_no,chain.atm_nm,chain.res_nm,&chain.ch_id,&chain.res_no,&chain.icode,&chain.sasa,&chain.N,&chain.atm_tp,&chain.atm_gp,&chain.surf) && (chain.atm_nm)){
       if(comp_asa[chain.atm_no].sasa!=chain.sasa){
-        //printf("%d %s %s %c %d %5.2f %6.4f %d %d %d %6.2f\n",
-        //  chain.atm_no,chain.atm_nm,chain.res_nm,chain.ch_id,chain.res_no,chain.icode,chain.sasa,chain.N,chain.atm_tp,chain.atm_gp,chain.surf);
         	fprintf(H_interacting,"%s",line);
       }
     }
@@ -153,7 +137,21 @@ void main(){
 
   fclose(comp);
   fclose(A);
+  fclose(B);
+  fclose(C);
+  fclose(D);
+  fclose(E);
+  fclose(F);
+  fclose(G);
+  fclose(H);
   fclose(A_interacting);
+  fclose(B_interacting);
+  fclose(C_interacting);
+  fclose(D_interacting);
+  fclose(E_interacting);
+  fclose(F_interacting);
+  fclose(G_interacting);
+  fclose(H_interacting);
 }
 
 void check_interacting(FILE *input_asa,FILE *interacting_asa,asa comp_asa[20000]){
