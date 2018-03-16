@@ -14,12 +14,13 @@
 //   int b[3];
 // }Parent;
 
-typedef struct Parent{      // 0 for left, 1 for digonal, 2 for top
-  int *p[3];
-}Parent;
+typedef struct Score{      // 0 for left, 1 for digonal, 2 for top
+  int score;
+  struct Score *parent[3];
+}Score;
 
 void global_alignment(char seq1[], char seq2[]);
-int max(Parent **parent,int **score, int t, int l, int d, int i, int j);
+int max(Score **s, int t, int l, int d, int i, int j);
 
 void main(int argc, char** argv){
   if(argc!=3){
@@ -35,53 +36,52 @@ void global_alignment(char seq1[], char seq2[]){
   x=strlen(seq1);
   y=strlen(seq2);
 
-  int **score=(int **)malloc((x+1)*sizeof(int *));
-  for(i=0;i<x+1;i++) score[i]=(int *)malloc((y+1)*sizeof(int *));
+  // int **score=(int **)malloc((x+1)*sizeof(int *));
+  // for(i=0;i<x+1;i++) score[i]=(int *)malloc((y+1)*sizeof(int *));
 
-  Parent **parent=(Parent **)malloc((x+1)*sizeof(Parent *));
-  for(i=0;i<x+1;i++) parent[i]=(Parent *)malloc((y+1)*sizeof(Parent *));
+  // Parent **parent=(Parent **)malloc((x+1)*sizeof(Parent *));
+  // for(i=0;i<x+1;i++) parent[i]=(Parent *)malloc((y+1)*sizeof(Parent *));
+
+  Score **s=(Score **)malloc((x+1)*sizeof(Score *));
+  for(i=0;i<x+1;i++) s[i]=(Score *)malloc((y+1)*sizeof(Score *));
 
   for(i=0;i<x+1;i++){
     for(j=0;j<y+1;j++){
-      score[i][j]=(int)INFINITY;
-      // parent[i][j].a[0]=-1;
-      // parent[i][j].b[0]=-1;
-      // parent[i][j].a[1]=-1;
-      // parent[i][j].b[1]=-1;
-      // parent[i][j].a[2]=-1;
-      // parent[i][j].b[2]=-1;
-      for(k=0;k<3;k++) parent[i][j].p[i]=NULL;
+      s[i][j].score=0;
+      // for(k=0;k<3;k++) s[i][j].parent[i]=NULL;
     }
   }
   for(i=0;i<x+1;i++){
     if(i==0)
-      score[i][0]=0;
-    else
-      score[i][0]=score[i-1][0]+gap;
-      parent[0][j].p[2]=&score[i-1][0];
+      s[i][0].score=0;
+    else{
+      s[i][0].score=s[i-1][0].score+gap;
+      // s[i][0].parent[2]=&s[i-1][0];
+    }
   }
   for(j=0;j<y+1;j++){
     if(j==0){
-      score[0][j]=0;
+      s[0][j].score=0;
     }
-    else
-      score[0][j]=score[0][j-1]+gap;
-      parent[0][j].p[0]=&score[0][j-1];
+    else{
+      s[0][j].score=s[0][j-1].score+gap;
+      // s[0][j].parent[0]=&s[0][j-1];
+    }
   }
   for(i=1;i<x+1;i++){
     for(j=1;j<y+1;j++){
-      t=score[i][j-1]+gap;
-      l=score[i-1][j]+gap;
+      l=s[i][j-1].score+gap;
+      t=s[i-1][j].score+gap;
       if(seq1[i-1]==seq2[j-1])
-        d=score[i-1][j-1]+match;
+        d=s[i-1][j-1].score+match;
       else
-        d=score[i-1][j-1]+mismatch;
-      score[i][j]=max(parent,score,t,l,d,i,j);
+        d=s[i-1][j-1].score+mismatch;
+      s[i][j].score=max(s,t,l,d,i,j);
     }
   }
   for(i=0;i<x+1;i++){
     for(j=0;j<y+1;j++){
-      printf("%d\t",score[i][j]);
+      printf("%d\t",s[i][j].score);
     }
     printf("\n");
   }
@@ -91,34 +91,29 @@ void global_alignment(char seq1[], char seq2[]){
   // while (ptr!=NULL) {
   //   if(parent)
   // }
-  free(score);
-  free(parent);
+  // for(i=0;i<x+1;i++) free(s[i]);
+  free(s);
 }
 
 
-int max(Parent **parent,int **score, int t, int l, int d, int i, int j){
+int max(Score **s, int t, int l, int d, int i, int j){
   int maximum=(int)(-INFINITY);
-  if(l>=maximum)
+  if(l>maximum)
     maximum=l;
-  if(t>=maximum)
-   maximum=t;
-  if(d>=maximum)
-   maximum=d;
+  if(t>maximum)
+    maximum=t;
+  if(d>maximum)
+    maximum=d;
 
-  if(d==maximum){
-    // parent[i][j].a[1]=i-1;
-    // parent[i][j].b[1]=j-1;
-    parent[i][j].p[1]=&score[i-1][j-1];
-  }
-  if(l==maximum){
-    // parent[i][j].a[0]=i-1;
-    // parent[i][j].b[0]=j;
-    parent[i][j].p[1]=&score[i-1][j];
-  }
-  if(t==maximum){
-    // parent[i][j].a[1]=i;
-    // parent[i][j].b[1]=j-1;
-    parent[i][j].p[1]=&score[i][j-1];
-  }
+  // if(d==maximum){
+  //   s[i][j].parent[1]=&s[i-1][j-1];
+  // }
+  // if(l==maximum){
+  //   s[i][j].parent[0]=&s[i-1][j];
+  // }
+  // if(t==maximum){
+  //   s[i][j].parent[2]=&s[i][j-1];
+  // }
+
   return maximum;
 }
